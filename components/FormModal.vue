@@ -68,10 +68,10 @@ export default {
             }
         },
         addTask(mode) {
-            if (this.dueDate === '') {
+            if (this.dueDate.trim() === '') {
                 this.dueDateError = true
             }
-            if (this.newTask === '') {
+            if (this.newTask.trim() === '') {
                 this.taskError = true
 
             }
