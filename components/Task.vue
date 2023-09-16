@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="`task min-h-[25%] flex flex-col md:w-full lg:w-2/5 w-11/12 border rounded-md border-solid border-2 border-sky-950 mb-3`">
+        :class="['task', 'min-h-[25%]', 'flex', 'flex-col', 'md:w-full', 'lg:w-2/5', 'w-11/12', 'border', 'rounded-md', 'border-solid', pastDueDate ? 'border-red-700' : 'border-sky-950', 'border-2', 'mb-3']">
         <div class="flex flex-row items-center justify-around h-3/6">
             <div class="font-bold text-xl">
                 {{ task.content }}
@@ -28,20 +28,36 @@
                 {{ task.done ? 'Undo' : 'Done' }}
             </button>
         </div>
+        <div>
+            <p v-if="pastDueDate" class=" ml-5 mb-5 text-red-700 text-xs italic">Past due date.</p>
+        </div>
     </div>
 </template>
 
 <script>
 import { v4 as uuidv4 } from 'uuid'
 export default {
-    props: ['task'],
+    props: ['task', 'pastDueDate'],
+    data() {
+        return { pastDueDate: false }
+    },
+    mounted() {
+        this.checkDueDate()
+    },
     methods: {
+        checkDueDate() {
+            let dueDate = new Date(this.task.dueDate)
+            let today = new Date()
+            today.setHours(0, 0, 0, 0)
+            if (today > dueDate && !this.task.done) {
+                this.pastDueDate = true
+            } else {
+                this.pastDueDate = false
+            }
+        },
         toggleDone() {
             this.$store.commit('TOGGLE_TASK', this.task)
         },
-        // removeTask() {
-        //     this.$store.commit('REMOVE_TASK', this.task)
-        // },
         editTask() {
             this.$emit('dulpicate')
         },

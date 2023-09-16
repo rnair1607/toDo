@@ -4,17 +4,24 @@
         <h1 class="text-white text-2xl text-center pb-5 ">{{ this.mode }} task</h1>
         <div class="flex flex-col w-2/4  mb-2 justify-center pl">
 
-            <div class="flex flex-col w-full ">
-                <label for="task">Title</label>
-                <input type="text" class="mb-3 rounded-md text-black w-full h-full" v-model="newTask"
-                    placeholder="Add a task" id="task">
+            <div class="mb-6">
+                <label class="block text-sm font-bold mb-2" for="task">
+                    Task
+                </label>
+                <input
+                    :class="['shadow', taskError ? 'border-red-700' : '', 'text-gray-700', 'appearance-none', 'border-2', 'rounded', 'w-full', 'py-2', 'px-3', 'mb-3', 'leading-tight', 'focus:outline-none', 'focus:shadow-outline']"
+                    id="task" type="text" v-model="newTask" @change="inputChange('Task')" placeholder="Add a task">
+                <p v-if="taskError" class="text-red-700 text-xs italic">Please add a task.</p>
             </div>
-            <div class="flex flex-col w-full ">
-                <label for="dueDate">Due Date</label>
-                <input type="date" id="dueDate" v-model="dueDate" class="rounded-md w-full h-full text-black">
+            <div class="mb-6">
+                <label class="block text-sm font-bold mb-2" for="dueDate">
+                    Due Date
+                </label>
+                <input
+                    :class="['shadow', dueDateError ? 'border-red-700' : '', 'text-gray-700', 'appearance-none', 'border-2', 'rounded', 'w-full', 'py-2', 'px-3', 'mb-3', 'leading-tight', 'focus:outline-none', 'focus:shadow-outline']"
+                    id="dueDate" type="date" v-model="dueDate" @change="inputChange('Date')" placeholder="DD-MM-YYYY">
+                <p v-if="dueDateError" class="text-red-700 text-xs italic">Please choose a due date.</p>
             </div>
-
-            <!-- <slot /> -->
         </div>
         <div class="text-md mt-8 w-2/4 py-2 px-6 flex flex-row justify-evenly items-center">
             <button class="text-white " @click="toggleModal">
@@ -36,12 +43,13 @@ export default {
         return {
             id: null,
             newTask: '',
-            dueDate: ''
+            dueDate: '',
+            dueDateError: false,
+            taskError: false
         }
     },
     mounted() {
-        console.log(`Mode: ${this.mode}`)
-        // console.log(this.editData)
+
         if (this.editData) {
             this.id = this.editData.task.id
             this.newTask = this.editData.task.content
@@ -51,8 +59,23 @@ export default {
         }
     },
     methods: {
+        inputChange(field) {
+            if (field === 'Task') {
+                this.taskError = false
+            }
+            if (field === 'Date') {
+                this.dueDateError = false
+            }
+        },
         addTask(mode) {
-            if (this.newTask) {
+            if (this.dueDate === '') {
+                this.dueDateError = true
+            }
+            if (this.newTask === '') {
+                this.taskError = true
+
+            }
+            if (this.newTask && this.dueDate) {
 
                 if (mode == 'Create') {
 
