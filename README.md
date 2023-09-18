@@ -1,6 +1,6 @@
 # toDo
 
-This frontend application is a Todo web app developed using VueJS 2 with VueX for state management and Tailwind for styling the layouts and components. Below are teh commands to run and test the application.
+This frontend application is a Todo web app developed using VueJS 2 with VueX for state management and Tailwind for styling the layouts and components. Below are the commands to run and test the application.
 
 ## Build Setup
 
