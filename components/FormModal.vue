@@ -1,8 +1,8 @@
 <template >
     <div
-        class="p-4 bg-sky-950 mt-32 lg:w-2/5 h-2/4 w-11/12   rounded-md border-orange-400 border-solid border-2 flex flex-col items-center justify-evenly">
+        class="p-4 bg-sky-950 mt-32 lg:w-2/5 lg:h-2/4 h-[59%] w-11/12   rounded-md border-orange-400 border-solid border-2 flex flex-col items-center justify-evenly">
         <h1 class="text-white text-2xl text-center pb-5 ">{{ this.mode }} task</h1>
-        <div class="flex flex-col w-2/4  mb-2 justify-center pl">
+        <div class="flex flex-col lg:w-2/4 w-[100%]  mb-2 justify-center pl">
 
             <div class="mb-6">
                 <label class="block text-sm font-bold mb-2" for="task">
@@ -23,7 +23,7 @@
                 <p v-if="dueDateError" class="text-red-700 text-xs italic">Please choose a due date.</p>
             </div>
         </div>
-        <div class="text-md mt-8 w-2/4 py-2 px-6 flex flex-row justify-evenly items-center">
+        <div class="text-md mt-8 lg:w-2/4 w-[100%] py-2 px-6 flex flex-row justify-evenly items-center">
             <button class="text-white " @click="toggleModal">
                 Close
             </button>
