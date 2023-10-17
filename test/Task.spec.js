@@ -1,18 +1,35 @@
-import { mount } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import Task from "@/components/Task.vue";
+
 describe("Task", () => {
-  test("is a vue component", () => {
-    let wrapper = mount(Task, {
-      propsData: {
-        task: {
-          id: "a77369f9-a893-4664-a61c-47d7a2539414",
-          content: "check due date validation",
-          done: false,
-          dueDate: "2023-09-15",
-          id: "a77369f9-a893-4664-a61c-47d7a2539414",
-        },
+  it("renders headers and elements", async () => {
+    let wrapper = shallowMount(Task, {
+      data() {
+        return {
+          pastDueDate: true,
+          task: {
+            content: "Random",
+            dueDate: "12/12/24",
+            done: false,
+          },
+        };
       },
     });
-    expect(wrapper.vm).toBeTruthy();
+
+    let content = wrapper.find("#content");
+    expect(content.exists()).toBe(true);
+    expect(content.text()).toBe("Random");
+
+    let dueDateElement = wrapper.find("#dueDate");
+    expect(dueDateElement.exists()).toBe(true);
+    expect(dueDateElement.text()).toBe("12/12/24");
+
+    let dltBtn = wrapper.find("#delete");
+    expect(dltBtn.exists()).toBe(true);
+
+    let editBtn = wrapper.find("#edit");
+    expect(editBtn.exists()).toBe(true);
+    await editBtn.trigger("click");
+    expect(wrapper.emitted()).toHaveProperty("dulpicate");
   });
 });
